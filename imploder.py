@@ -2,7 +2,7 @@
 
 import imp
 from types import ModuleType
-rom inspect import stack
+from inspect import stack
 import export
 
 class Implode:
