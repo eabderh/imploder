@@ -7,19 +7,29 @@ from inspect import stack
 
 class Implode:
     modules = []
-#    def __init__(self):
-    def implode(self):
+
+    # 'public'
+    def __call__(self):
         for module in self.modules:
             print 'reloading ' + module.__name__
             print 'modules'
             self.reload(module)
+    #def implode(self):
+    #    for module in self.modules:
+    #        print 'reloading ' + module.__name__
+    #        print 'modules'
+    #        self.reload(module)
     def add(self, module):
         self.modules.append(module)
-    def addr(self, modules):
+    def extend(self, modules):
         self.modules.extend(modules)
     def reload(self, module):
         self.rreload(module)
         self.export_module(module)
+    def get(self):
+        return self.modules
+
+    # 'private'
     def export_module(self, module):
         for key, val in module.__dict__.items():
             if not key.startswith('_') and type(val) is not ModuleType:
@@ -34,27 +44,30 @@ class Implode:
         for key, val in module.__dict__.items():
             if type(val) is ModuleType:
                 self.rreload(val)
-#                if not module.__file__.startswith('/usr/'):
-    def get_modules(self):
-        return self.modules
-    @staticmethod
-    def export_dict(data):
-        for key, val in data.items():
-            last_frameinfo = stack()[-1]
-            last_frame = last_frameinfo[0]
-            last_frame.f_globals[key] = val
+                #if not module.__file__.startswith('/usr/'):
+
+
+def export_dict(data):
+    for key, val in data.items():
+        last_frameinfo = stack()[-1]
+        last_frame = last_frameinfo[0]
+        last_frame.f_globals[key] = val
 
 _inst = Implode()
 
-exports = {}
-exports['implode']  = _inst.implode
-exports['impadd']   = _inst.add
-exports['impaddr']  = _inst.addr
-exports['impload']  = _inst.reload
-print exports
-_inst.export_dict(exports)
+#main     = _inst.implode
+#add      = _inst.add
+#extend     = _inst.extend
+#load     = _inst.reload
+#get      = _inst.get
 
-get_modules     = _inst.get_modules
+exports = {}
+exports['implode']      = _inst
+#exports['impadd']       = _inst.add
+#exports['impextend']    = _inst.extend
+#exports['impload']      = _inst.reload
+#exports['impget']       = _inst.get
+export_dict(exports)
 
 
 #from inspect import currentframe
