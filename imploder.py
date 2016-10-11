@@ -2,13 +2,8 @@
 
 import imp
 from types import ModuleType
-from inspect import stack
-
-def export_dict(data):
-    for key, val in data.items():
-        export_frameinfo = stack()[-1]
-        export_frame = export_frameinfo[0]
-        export_frame.f_globals[key] = val
+rom inspect import stack
+import export
 
 class Implode:
     modules = []
@@ -29,13 +24,7 @@ class Implode:
     # 'private'
     def reload(self, module):
         self.rreload(module)
-        self.export_module(module)
-    def export_module(self, module):
-        for key, val in module.__dict__.items():
-            if not key.startswith('_') and type(val) is not ModuleType:
-                export_frameinfo = stack()[-1]
-                export_frame = export_frameinfo[0]
-                export_frame.f_globals[key] = val
+        export.module(module)
     def rreload(self, module):
         if module.__file__.startswith('/usr/'):
             return
@@ -47,8 +36,6 @@ class Implode:
 
 _inst = Implode()
 exports = {'implode': _inst}
-export_dict(exports)
-
-
+export.dict(exports)
 
 
