@@ -24,18 +24,21 @@ class Implode:
     # 'private'
     def reload(self, module):
         self.rreload(module)
-        export.module(module)
+        export.top.module(module)
     def rreload(self, module):
-        if module.__file__.startswith('/usr/'):
+        #print ' - ' + module.__name__
+        if ('C_BUILTIN' in module.__dict__ or
+            module.__file__.startswith('/usr/')):
             return
-        imp.reload(module)
-        print '---- ' + module.__name__
         for key, val in module.__dict__.items():
             if type(val) is ModuleType:
                 self.rreload(val)
+        imp.reload(module)
+        print ' - ' + module.__name__
 
 _inst = Implode()
 exports = {'implode': _inst}
-export.dict(exports)
+export.top.dict(exports)
+
 
 
