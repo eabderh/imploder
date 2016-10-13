@@ -26,10 +26,12 @@ class Implode:
         self.rreload(module)
         export.top.module(module)
     def rreload(self, module):
-        if '__file__' not in module.__dict__:
+        if '__IMPLODE__' not in module.__dict__:
             return
-        if module.__file__.startswith('/usr/'):
-            return
+#        if '__file__' not in module.__dict__:
+#            return
+#        if module.__file__.startswith('/usr/'):
+#            return
         for key, val in module.__dict__.items():
             if type(val) is ModuleType:
                 self.rreload(val)
