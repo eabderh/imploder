@@ -11,8 +11,8 @@ class Implode:
     # 'public'
     def __call__(self):
         for module in self.modules:
-            print 'reloading ' + module.__name__
-            print 'modules'
+            print 'reloading module: ' + module.__name__
+            print 'dependancies:'
             self.reload(module)
     def add(self, module):
         self.modules.append(module)
@@ -26,9 +26,9 @@ class Implode:
         self.rreload(module)
         export.top.module(module)
     def rreload(self, module):
-        #print ' - ' + module.__name__
-        if ('C_BUILTIN' in module.__dict__ or
-            module.__file__.startswith('/usr/')):
+        if '__file__' not in module.__dict__:
+            return
+        if module.__file__.startswith('/usr/'):
             return
         for key, val in module.__dict__.items():
             if type(val) is ModuleType:
