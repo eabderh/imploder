@@ -11,8 +11,8 @@ class Implode:
     # 'public'
     def __call__(self):
         for module in self.modules:
-            print 'reloading module: ' + module.__name__
-            print 'dependancies:'
+            print('reloading module: ' + module.__name__)
+            print('dependancies:')
             self.reload(module)
     def add(self, module):
         self.modules.append(module)
@@ -36,7 +36,7 @@ class Implode:
             if type(val) is ModuleType:
                 self.rreload(val)
         imp.reload(module)
-        print ' - ' + module.__name__
+        print(' - ' + module.__name__)
 
 _inst = Implode()
 exports = {'implode': _inst}

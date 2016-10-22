@@ -1,3 +1,3 @@
 
-from imploder import *
+from .imploder import *
 
