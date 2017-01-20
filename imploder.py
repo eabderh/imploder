@@ -2,14 +2,26 @@
 
 import importlib
 import sys
-import export
+from exporter import Exporter
+import cdlib
+
+export = Exporter(Exporter.TOP)
+
 def implode():
     for module in sys.modules.values():
         items = module.__dict__.items()
         if ('__IMPLODE__', True) in items:
             print('IMPLODE - ' + module.__name__)
-            importlib.reload(module)
-            export.top.module(module)
+            if module.__spec__ is not None:
+                importlib.reload(module)
+                export.module(module)
+#            else:
+#                #print('--------test')
+#                directory = os.path.dirname(module.__file__)
+#                with cdlib.setdir(directory):
+#                    importlib.reload(module)
+#            export.core.module(module)
+
         # @Optional
         else:
             if ('__RELOAD__',  True) in items:
@@ -25,8 +37,8 @@ def impload(module):
     importlib.reload(module)
 
 
-export.top.val('implode', implode)
-export.top.val('impload', impload)
+#export.top.val('implode', implode)
+#export.top.val('impload', impload)
 
 
 
