@@ -7,9 +7,9 @@ def fromfile(path):
 
 setup(
     # basic
-    name='',
+    name='imploder',
     version='0.1.0',
-    description='',
+    description='reload modules',
     long_description=fromfile('README.md'),
     # author
     author='Elias Abderhalden',
