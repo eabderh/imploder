@@ -1,9 +1,9 @@
 
 
-import importlib
 import sys
+import importlib
 from exporter import Exporter
-import cdlib
+#import cdlib
 
 export = Exporter(Exporter.TOP)
 
@@ -23,18 +23,19 @@ def implode():
 #            export.core.module(module)
 
         # @Optional
-        else:
-            if ('__RELOAD__',  True) in items:
-                print('RELOAD - ' + module.__name__)
-                importlib.reload(module)
-            if ('__EXPORT__',  True) in items:
-                print('EXPORT - ' + module.__name__)
-                export.top.module(module)
-        # @EndOptional
+#        else:
+#            if ('__RELOAD__',  True) in items:
+#                print('RELOAD - ' + module.__name__)
+#                importlib.reload(module)
+#            if ('__EXPORT__',  True) in items:
+#                print('EXPORT - ' + module.__name__)
+#                export.top.module(module)
+#        # @EndOptional
 
 
 def impload(module):
     importlib.reload(module)
+    export.module(module)
 
 
 #export.top.val('implode', implode)
