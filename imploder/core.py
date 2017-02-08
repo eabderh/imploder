@@ -2,10 +2,8 @@
 
 import sys
 import importlib
-from exporter import Exporter
+from exporter import export
 #import cdlib
-
-export = Exporter(Exporter.TOP)
 
 def implode():
     for module in sys.modules.values():
