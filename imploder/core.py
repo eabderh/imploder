@@ -2,8 +2,10 @@
 
 import sys
 import importlib
-from exporter import export
-#import cdlib
+from exporter import Export
+
+globalize = Export().top()
+
 
 def implode():
     for module in sys.modules.values():
@@ -12,32 +14,12 @@ def implode():
             print('IMPLODE - ' + module.__name__)
             if module.__spec__ is not None:
                 importlib.reload(module)
-                export.module(module)
-#            else:
-#                #print('--------test')
-#                directory = os.path.dirname(module.__file__)
-#                with cdlib.setdir(directory):
-#                    importlib.reload(module)
-#            export.core.module(module)
-
-        # @Optional
-#        else:
-#            if ('__RELOAD__',  True) in items:
-#                print('RELOAD - ' + module.__name__)
-#                importlib.reload(module)
-#            if ('__EXPORT__',  True) in items:
-#                print('EXPORT - ' + module.__name__)
-#                export.top.module(module)
-#        # @EndOptional
+                globalize.module(module)
 
 
 def impload(module):
     importlib.reload(module)
-    export.module(module)
-
-
-#export.top.val('implode', implode)
-#export.top.val('impload', impload)
+    globalize.module(module)
 
 
 
